@@ -2,13 +2,17 @@ import React from "react";
 
 import "./detail.css";
 import { auth } from "../../lib/firebase";
+import { useChatStore } from "../../lib/chatStore";
 
 const Detail = () => {
+
+    const {user} = useChatStore();
+
     return (
         <div className="detail">
             <div className="user">
-                <img src="./avatar.png" alt="" />
-                <h2>Jane Doe</h2>
+                <img src={user?.avatar || "./avatar.png"} alt="" />
+                <h2>{user?.username}</h2>
                 <p>Lorem ipsum, dolor sit amet.</p>
             </div>
             <div className="info">
@@ -18,7 +22,6 @@ const Detail = () => {
                         <img src="./arrowUp.png" alt="" />
                     </div>
                 </div>
-
 
                 <div className="option">
                     <div className="title">
@@ -32,7 +35,7 @@ const Detail = () => {
                         <span>Ảnh</span>
                         <img src="./arrowDown.png" alt="" />
                     </div>
-                    <div className="photos">
+                    {/* <div className="photos">
                         <div className="photoItem">
                             <div className="photoDetail">
                                 <img src="https://cdn.oneesports.vn/cdn-data/sites/4/2024/12/honkai-star-rail-castorice.jpg" alt="" />
@@ -61,7 +64,7 @@ const Detail = () => {
                             </div>
                             <img src="./download.png" alt="" className="icon" />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="option">
@@ -70,7 +73,7 @@ const Detail = () => {
                         <img src="./arrowUp.png" alt="" />
                     </div>
                 </div>
-                <button>Chặn</button>
+                {/* <button>Chặn</button> */}
                 <button className="logout" onClick={() => auth.signOut()}>Đăng xuất</button>
             </div>
         </div>

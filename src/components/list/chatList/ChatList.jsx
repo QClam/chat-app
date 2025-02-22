@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 
 import AddUser from './addUser/addUser';
 import { useUserStore } from '../../../lib/userStore';
+import { useChatStore } from '../../../lib/chatStore';
 
-import './chatList.css'
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
+import './chatList.css'
 
 const ChatList = () => {
 
@@ -13,6 +14,9 @@ const ChatList = () => {
     const [chats, setChats] = useState();
 
     const { currentUser } = useUserStore();
+    const { chatId, changeChat } = useChatStore();
+    // console.log(chatId);
+
 
     useEffect(() => {
         const unSub = onSnapshot(doc(db, "userchats", currentUser.id), async (response) => {
@@ -37,6 +41,28 @@ const ChatList = () => {
         }
     }, [currentUser.id]);
 
+    const handleSelect = async (chat) => {
+
+        const userChats = chats.map((item) => {
+            const { user, ...rest } = item;
+            return rest;
+        });
+
+        const chatIndex = userChats.findIndex((item) => item.chatId === chat.chatId)
+
+        userChats[chatIndex].isSeen = true;
+
+        const userChatRef = doc(db, "userchats", currentUser.id);
+        try {
+            await updateDoc(userChatRef, {
+                chats: userChats,
+            });
+            changeChat(chat.chatId, chat.user)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className='chatList'>
             <div className="search">
@@ -48,10 +74,10 @@ const ChatList = () => {
             </div>
             {chats?.length > 0 ? (
                 chats.map((chat) => (
-                    <div className="item" key={chat.chatId}>
-                        <img src="./avatar.png" alt="" />
+                    <div className="item" key={chat.chatId} onClick={() => handleSelect(chat)} style={{ backgroundColor: chat?.isSeen ? "transparent" : "#5183fe" }}>
+                        <img src={chat.user.avatar || "./avatar.png"} alt="" />
                         <div className='texts'>
-                            <span>{chat.user?.name || "Unknown"}</span>
+                            <span>{chat.user.username || "Unknown"}</span>
                             <p>{chat.lastMessage}</p>
                         </div>
                     </div>
