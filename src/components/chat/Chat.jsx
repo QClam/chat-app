@@ -158,6 +158,7 @@ const Chat = () => {
                     placeholder="Nhập tin nhắn..."
                     onChange={(e) => setText(e.target.value)}
                     value={text}
+                    onKeyDown={(e) => e.key === "Enter" && handleSend()}
                 />
                 <div className="emoji">
                     <img

@@ -54,7 +54,9 @@ const Login = () => {
             });
 
             toast.success('Tạo tài khoản thành công, Bạn có thể đăng nhập ngay bây giờ')
-            setLoading(false)
+
+            e.target.reset();
+            setAvatar({ file: null, url: '' });
 
         } catch (error) {
             console.log(error);

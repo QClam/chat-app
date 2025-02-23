@@ -6,27 +6,27 @@ import { useChatStore } from "../../lib/chatStore";
 
 const Detail = () => {
 
-    const {user} = useChatStore();
+    const { user } = useChatStore();
 
     return (
         <div className="detail">
             <div className="user">
                 <img src={user?.avatar || "./avatar.png"} alt="" />
                 <h2>{user?.username}</h2>
-                <p>Lorem ipsum, dolor sit amet.</p>
+                {/* <p>Lorem ipsum, dolor sit amet.</p> */}
             </div>
             <div className="info">
                 <div className="option">
                     <div className="title">
                         <span>Cài đặt</span>
-                        <img src="./arrowUp.png" alt="" />
+                        <img src="./arrowDown.png" alt="" />
                     </div>
                 </div>
 
                 <div className="option">
                     <div className="title">
                         <span>Quyền riêng tư và hỗ trợ</span>
-                        <img src="./arrowUp.png" alt="" />
+                        <img src="./arrowDown.png" alt="" />
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@ const Detail = () => {
                 <div className="option">
                     <div className="title">
                         <span>File được chia sẻ</span>
-                        <img src="./arrowUp.png" alt="" />
+                        <img src="./arrowDown.png" alt="" />
                     </div>
                 </div>
                 {/* <button>Chặn</button> */}
